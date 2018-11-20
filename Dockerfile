@@ -113,3 +113,18 @@ RUN curl -fsSL https://s3.amazonaws.com/redshift-downloads/drivers/jdbc/1.2.15.1
 
 RUN chown -R airflow.airflow ${AIRFLOW_HOME}
 USER airflow
+
+###################################
+FROM airflow-rs as airflow-example-dags
+
+RUN set -ex \
+    && mkdir -p /usr/local/airflow/dags \
+    && cd /usr/local/airflow/dags \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/contrib/example_dags/example_kubernetes_executor.py -o example_kubernetes_executor.py \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/contrib/example_dags/example_kubernetes_executor_config.py -o example_kubernetes_executor_config.py \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/contrib/example_dags/example_kubernetes_operator.py -o example_kubernetes_operator.py \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_bash_operator.py -o example_bash_operator.py \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_branch_operator.py -o example_branch_operator.py \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_python_operator.py -o example_python_operator.py \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_latest_only.py -o example_latest_only.py \
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_trigger_controller_dag.py -o example_trigger_controller_dag.py
