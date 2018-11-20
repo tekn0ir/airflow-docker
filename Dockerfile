@@ -118,7 +118,7 @@ USER airflow
 FROM airflow-rs as airflow-example-dags
 
 RUN set -ex \
-    && mkdir -p /usr/local/airflow/dags \
+    && mkdir -p ${AIRFLOW_HOME}/dags \
     && cd /usr/local/airflow/dags \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/contrib/example_dags/example_kubernetes_executor.py -o example_kubernetes_executor.py \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/contrib/example_dags/example_kubernetes_executor_config.py -o example_kubernetes_executor_config.py \
@@ -127,4 +127,5 @@ RUN set -ex \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_branch_operator.py -o example_branch_operator.py \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_python_operator.py -o example_python_operator.py \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_latest_only.py -o example_latest_only.py \
-    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_trigger_controller_dag.py -o example_trigger_controller_dag.py
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_trigger_controller_dag.py -o example_trigger_controller_dag.py \
+    && ln ${AIRFLOW_HOME}/dags /tmp/dags
