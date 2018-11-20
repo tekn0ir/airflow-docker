@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -xe
 
 TRY_LOOP="20"
 
@@ -19,7 +20,7 @@ if [[ $POSTGRES_ENABLED ]]; then
       done
     }
 
-    export AIRFLOW__CORE__SQL_ALCHEMY_CONN="postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
+    export SQL_ALCHEMY_CONN="postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
     wait_for_port "Postgres" "$POSTGRES_HOST" "$POSTGRES_PORT"
 fi
 
