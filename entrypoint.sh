@@ -36,7 +36,6 @@ case "$1" in
     exec airflow "$@"
     ;;
   *)
-    # The command is something like bash, not an airflow subcommand. Just run it in the right environment.
-    exec "$@"
+    bash -cx "$@"
     ;;
 esac
