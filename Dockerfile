@@ -128,4 +128,4 @@ RUN set -ex \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_python_operator.py -o example_python_operator.py \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_latest_only.py -o example_latest_only.py \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_trigger_controller_dag.py -o example_trigger_controller_dag.py \
-    && ln ${AIRFLOW_HOME}/dags /tmp/dags
+    && ln -s ${AIRFLOW_HOME}/dags /tmp/dags
