@@ -113,7 +113,7 @@ RUN sed -i.bak s@"'mountPath': dag_volume_mount_path,"@"'mountPath': '/tmp/dags'
 RUN sed -i.bak s/"if self.kube_config.dags_volume_claim:"/"if True:"/ /usr/local/lib/python3.6/site-packages/airflow/contrib/kubernetes/worker_configuration.py
 
 # Add prometheus exporter
-RUN git clone https://github.com/epoch8/airflow-exporter ${AIRFLOW_HOME}/plugins/prometheus_exporter
+RUN  mkdir -p ${AIRFLOW_HOME}/plugins && curl -L -s -N https://github.com/epoch8/airflow-exporter/raw/master/prometheus_exporter.py -o ${AIRFLOW_HOME}/plugins/prometheus_exporter.py
 
 # Copy Redshift Jdbc driver into container
 RUN mkdir -p ${AIRFLOW_HOME}/drivers
