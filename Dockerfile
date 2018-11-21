@@ -102,7 +102,8 @@ RUN set -ex \
 
 # Patches
 RUN sed -i.bak s/"supports_autocommit = True"/"supports_autocommit = False"/ /usr/local/lib/python3.6/site-packages/airflow/hooks/jdbc_hook.py
-RUN sed -i.bak s/"'readOnly': True"/"'readOnly': False"/ /usr/local/lib/python3.6/site-packages/airflow/contrib/kubernetes/worker_configuration.py
+RUN sed -i.bak s@"'AIRFLOW__CORE__DAGS_FOLDER': '/tmp/dags',"@"'AIRFLOW__CORE__DAGS_FOLDER': '/usr/local/airflow/dags',"@ /usr/local/lib/python3.6/site-packages/airflow/contrib/kubernetes/worker_configuration.py
+RUN sed -i.bak s@"'mountPath': dag_volume_mount_path,"@"'mountPath': '/tmp/dags',"@ /usr/local/lib/python3.6/site-packages/airflow/contrib/kubernetes/worker_configuration.py
 
 # Add prometheus exporter
 RUN git clone https://github.com/epoch8/airflow-exporter ${AIRFLOW_HOME}/plugins/prometheus_exporter
@@ -127,5 +128,4 @@ RUN set -ex \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_branch_operator.py -o example_branch_operator.py \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_python_operator.py -o example_python_operator.py \
     && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_latest_only.py -o example_latest_only.py \
-    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_trigger_controller_dag.py -o example_trigger_controller_dag.py \
-    && ln -s ${AIRFLOW_HOME}/dags /tmp/dags
+    && curl -L -s -N https://github.com/apache/incubator-airflow/raw/master/airflow/example_dags/example_trigger_controller_dag.py -o example_trigger_controller_dag.py
