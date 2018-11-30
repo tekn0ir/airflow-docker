@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 
 # Airflow
-ARG AIRFLOW_VERSION=master
+ARG AIRFLOW_VERSION=develop
 ARG AIRFLOW_DEPS=""
 ARG PYTHON_DEPS=""
 ENV AIRFLOW_HOME=/usr/local/airflow
@@ -54,6 +54,8 @@ RUN set -ex \
     && pip install pyasn1 \
     && if [ "$AIRFLOW_VERSION" = "master" ]; then\
            pip3.6 install git+https://github.com/apache/incubator-airflow.git@master#egg=apache-airflow[crypto,postgres,hive,jdbc,kubernetes,async,hdfs,password,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}];\
+       elif [ "$AIRFLOW_VERSION" = "develop" ]; then\
+           pip3.6 install git+https://github.com/tekn0ir/incubator-airflow.git@patch_try_number#egg=apache-airflow[crypto,postgres,hive,jdbc,kubernetes,async,hdfs,password,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}];\
        elif [ -n "$AIRFLOW_VERSION" ]; then\
            pip3.6 install --no-cache-dir apache-airflow[crypto,postgres,hive,jdbc,kubernetes,async,hdfs,password,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==$AIRFLOW_VERSION;\
        else\
