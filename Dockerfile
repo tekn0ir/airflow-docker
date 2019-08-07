@@ -94,7 +94,7 @@ RUN set -ex \
     && apt-get upgrade -yqq \
     && apt-get install -yqq --no-install-recommends \
         git \
-        openjdk-8-jre-headless \
+        openjdk-11-jre-headless \
     && pip install prometheus_client \
     && pip install awscli \
     && pip install JayDeBeApi==1.1.1 \
